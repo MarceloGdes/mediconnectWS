@@ -2,6 +2,7 @@ package br.unipar.mediconnect.interfaces;
 
 import br.unipar.mediconnect.domain.Medico;
 import br.unipar.mediconnect.dto.MedicoRequestInsertDTO;
+import br.unipar.mediconnect.dto.MedicoRequestUpdateDto;
 import br.unipar.mediconnect.dto.MedicoResponseGetDto;
 import br.unipar.mediconnect.exceptions.BusinessException;
 import jakarta.jws.WebMethod;
@@ -17,4 +18,7 @@ public interface MedicoWs {
 
     @WebMethod
     ArrayList<MedicoResponseGetDto> getAll() throws BusinessException;
+
+    @WebMethod
+    void update(MedicoRequestUpdateDto medico) throws BusinessException;
 }

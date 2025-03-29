@@ -1,6 +1,7 @@
 package br.unipar.mediconnect.domain;
 
 import br.unipar.mediconnect.dto.MedicoRequestInsertDTO;
+import br.unipar.mediconnect.dto.MedicoRequestUpdateDto;
 
 public class Medico {
     private int id;
@@ -20,6 +21,14 @@ public class Medico {
         especialidade.setId(dto.getEspecialidadeId());
         endereco = dto.getEndereco();
     }
+
+    public Medico(MedicoRequestUpdateDto dto) {
+        id = dto.getId();
+        nome = dto.getNome();
+        telefone = dto.getTelefone();
+        endereco = dto.getEndereco();
+    }
+
 
     public Medico() {
     }

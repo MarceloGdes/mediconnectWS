@@ -27,6 +27,18 @@
         <soap:fault name="BusinessException" use="literal"/>
       </wsdl:fault>
     </wsdl:operation>
+    <wsdl:operation name="update">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="update">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updateResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="MedicoWsImpService">
     <wsdl:port binding="tns:MedicoWsImpServiceSoapBinding" name="MedicoWsImpPort">
@@ -40,6 +52,8 @@
       <xs:element name="getAllResponse" type="tns:getAllResponse"/>
       <xs:element name="insert" type="tns:insert"/>
       <xs:element name="insertResponse" type="tns:insertResponse"/>
+      <xs:element name="update" type="tns:update"/>
+      <xs:element name="updateResponse" type="tns:updateResponse"/>
       <xs:complexType name="getAll">
         <xs:sequence/>
       </xs:complexType>
@@ -102,6 +116,22 @@
           <xs:element name="id" type="xs:int"/>
         </xs:sequence>
       </xs:complexType>
+      <xs:complexType name="update">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="tns:medicoRequestUpdateDto"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="medicoRequestUpdateDto">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="endereco" type="tns:endereco"/>
+          <xs:element name="id" type="xs:int"/>
+          <xs:element minOccurs="0" name="nome" type="xs:string"/>
+          <xs:element minOccurs="0" name="telefone" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="updateResponse">
+        <xs:sequence/>
+      </xs:complexType>
       <xs:element name="BusinessException" type="tns:BusinessException"/>
       <xs:complexType name="BusinessException">
         <xs:sequence>
@@ -122,8 +152,14 @@
   <wsdl:message name="insertResponse">
     <wsdl:part element="ns1:insertResponse" name="parameters"></wsdl:part>
   </wsdl:message>
+  <wsdl:message name="updateResponse">
+    <wsdl:part element="ns1:updateResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
   <wsdl:message name="insert">
     <wsdl:part element="ns1:insert" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="update">
+    <wsdl:part element="ns1:update" name="parameters"></wsdl:part>
   </wsdl:message>
   <wsdl:portType name="MedicoWs">
     <wsdl:operation name="getAll">
@@ -134,6 +170,11 @@
     <wsdl:operation name="insert">
       <wsdl:input message="ns1:insert" name="insert"></wsdl:input>
       <wsdl:output message="ns1:insertResponse" name="insertResponse"></wsdl:output>
+      <wsdl:fault message="ns1:BusinessException" name="BusinessException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="update">
+      <wsdl:input message="ns1:update" name="update"></wsdl:input>
+      <wsdl:output message="ns1:updateResponse" name="updateResponse"></wsdl:output>
       <wsdl:fault message="ns1:BusinessException" name="BusinessException"></wsdl:fault>
     </wsdl:operation>
   </wsdl:portType>
@@ -171,4 +212,29 @@
    <soapenv:Body>\r
       <int:getAll/>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://mediconnect.unipar.br/MedicoWs/getAll"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://mediconnect.unipar.br/MedicoWs/getAll"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="eae091cd-4b95-4a8b-9eba-9de1055e735a" isOneWay="false" action="" name="update" bindingOperationName="update" type="Request-Response" outputName="updateResponse" inputName="update" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="576eebf5-8624-4d24-b8e5-0919b4b2b2ec" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/mediconnect-1.0-SNAPSHOT/MedicoWsImp</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://interfaces.mediconnect.unipar.br/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <int:update>
+         <!--Optional:-->
+         <arg0>
+            <!--Optional:-->
+            <endereco>
+               <!--Optional:-->
+               <bairro>Jd America</bairro>
+               <!--Optional:-->
+               <complemento>aaaaaaaaa</complemento>
+               <!--Optional:-->
+               <logradouro>Av Maripa</logradouro>
+               <!--Optional:-->
+               <num>1</num>
+            </endereco>
+            <id>4</id>
+            <!--Optional:-->
+            <nome>Matheus da Silva</nome>
+            <!--Optional:-->
+            <telefone>459998876</telefone>
+         </arg0>
+      </int:update>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://mediconnect.unipar.br/MedicoWs/update"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
