@@ -2,10 +2,13 @@ package br.unipar.mediconnect;
 
 import br.unipar.mediconnect.domain.Medico;
 import br.unipar.mediconnect.dto.MedicoRequestInsertDTO;
+import br.unipar.mediconnect.dto.MedicoResponseGetDto;
 import br.unipar.mediconnect.exceptions.BusinessException;
 import br.unipar.mediconnect.interfaces.MedicoWs;
 import br.unipar.mediconnect.services.MedicoService;
 import jakarta.jws.WebService;
+
+import java.util.ArrayList;
 
 @WebService(endpointInterface = "br.unipar.mediconnect.interfaces.MedicoWs")
 public class MedicoWsImp implements MedicoWs {
@@ -15,5 +18,10 @@ public class MedicoWsImp implements MedicoWs {
         Medico medico = new Medico(dto);
 
         return medicoService.insert(medico);
+    }
+
+    @Override
+    public ArrayList<MedicoResponseGetDto> getAll() throws BusinessException {
+        return medicoService.getAll();
     }
 }

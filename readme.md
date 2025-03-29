@@ -1,0 +1,1 @@
+XML de envio e resposta está bagunçado, é normal?

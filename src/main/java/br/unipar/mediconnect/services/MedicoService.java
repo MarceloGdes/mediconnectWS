@@ -1,8 +1,11 @@
 package br.unipar.mediconnect.services;
 
 import br.unipar.mediconnect.domain.Medico;
+import br.unipar.mediconnect.dto.MedicoResponseGetDto;
 import br.unipar.mediconnect.exceptions.BusinessException;
 import br.unipar.mediconnect.repositories.MedicoRepository;
+
+import java.util.ArrayList;
 
 public class MedicoService {
     private MedicoRepository repository;
@@ -24,6 +27,28 @@ public class MedicoService {
         }catch (Exception e){
             e.printStackTrace();
             throw new BusinessException("Erro ao inserir médico. Entre em contato com o suporte.");
+        }
+    }
+
+    public ArrayList<MedicoResponseGetDto> getAll() throws BusinessException {
+        especialideService = new EspecialideService();
+        var medicosResponse = new ArrayList<MedicoResponseGetDto>();
+
+        try {
+            var medicos = repository.selectAll();
+
+            for (Medico medico : medicos) {
+                var descEspecialidade = especialideService.findById(medico.getEspecialidade().getId()).getDescricao();
+                medico.getEspecialidade().setDescricao(descEspecialidade);
+
+                medicosResponse.add(new MedicoResponseGetDto(medico));
+            }
+
+            return medicosResponse;
+
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException("Um erro ocorreu ao buscar os médicos. Entre em contato com o suporte.");
         }
     }
 
