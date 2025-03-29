@@ -31,4 +31,9 @@ public class MedicoWsImp implements MedicoWs {
         var medico = new Medico(dto);
         medicoService.update(medico);
     }
+
+    @Override
+    public void remove(int id) throws BusinessException {
+        medicoService.setStAtivoToFalse(id);
+    }
 }

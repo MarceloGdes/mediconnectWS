@@ -11,6 +11,7 @@ public class Medico {
     private String crm;
     private Especialidade especialidade;
     private Endereco endereco;
+    private boolean stAtivo;
 
     public Medico(MedicoRequestInsertDTO dto) {
         nome = dto.getNome();
@@ -31,6 +32,14 @@ public class Medico {
 
 
     public Medico() {
+    }
+
+    public boolean isStAtivo() {
+        return stAtivo;
+    }
+
+    public void setStAtivo(boolean stAtivo) {
+        this.stAtivo = stAtivo;
     }
 
     public int getId() {

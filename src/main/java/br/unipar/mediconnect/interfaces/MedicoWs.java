@@ -21,4 +21,7 @@ public interface MedicoWs {
 
     @WebMethod
     void update(MedicoRequestUpdateDto medico) throws BusinessException;
+
+    @WebMethod
+    void remove(int id) throws BusinessException;
 }

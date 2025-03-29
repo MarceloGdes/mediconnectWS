@@ -28,6 +28,9 @@ public class MedicoRepository {
     private static final String FIND_BY_ID =
             "SELECT * FROM medico WHERE id=?";
 
+    private static final String UPDATE_STATUS =
+            "UPDATE medico SET ativo=? WHERE id=?";
+
     public Medico insert(Medico medico) throws SQLException, NamingException {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -134,6 +137,7 @@ public class MedicoRepository {
                 medico.setCrm(rs.getString("crm"));
                 medico.setId(id);
                 medico.setTelefone(rs.getString("telefone"));
+                medico.setStAtivo(rs.getBoolean("ativo"));
 
                 var especialidade = new Especialidade();
                 especialidade.setId(rs.getInt("especialidade_id"));
@@ -157,4 +161,23 @@ public class MedicoRepository {
 
         return null;
     }
+
+    public int updateStatus(int id, boolean ativo) throws SQLException, NamingException {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            conn = new ConnectionFactory().getConnection();
+            pstmt = conn.prepareStatement(UPDATE_STATUS);
+
+            pstmt.setBoolean(1, ativo);
+            pstmt.setInt(2, id);
+
+            return pstmt.executeUpdate();
+
+        }finally {
+            if(conn != null) conn.close();
+            if(pstmt != null) pstmt.close();
+        }
+        }
 }

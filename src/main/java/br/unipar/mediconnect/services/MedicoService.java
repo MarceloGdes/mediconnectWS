@@ -67,13 +67,31 @@ public class MedicoService {
         }
     }
 
-    private Medico findById(int id) throws BusinessException {
+    public void setStAtivoToFalse(int id) throws BusinessException {
+        var medico = findById(id); // validar se o médico existe.
+
+        if(!medico.isStAtivo()) throw new BusinessException("Médico já inativado/excluido do sistema");
+
+        try {
+            var linhasAlteradas = repository.updateStatus(id, false);
+
+            if(linhasAlteradas < 1) throw new BusinessException("Ocorreu um erro ao excluir o médico. Solicite apoio ao suporte.");
+        }catch (Exception e) {
+            e.printStackTrace();
+            throw new BusinessException("Ocorreu um erro ao excluir o médico. Solicite apoio ao suporte.");
+        }
+    }
+
+    public Medico findById(int id) throws BusinessException {
         try {
             var medico = repository.findById(id);
 
             if(medico != null) return medico;
 
             throw new BusinessException("Medico não encontrado. Verifique o id informado.");
+
+        }catch (BusinessException e) {
+            throw e;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -99,8 +117,6 @@ public class MedicoService {
     }
 
     private void validarMedicoUpdate(Medico medico) throws BusinessException {
-
-        if(medico.getId() <= 0) throw new BusinessException("O id do médico é obrigatório.");
 
         findById(medico.getId()); //método verifica se o registro existe no banco. Caso não exista é lançada uma excesão.
 
