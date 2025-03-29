@@ -1,18 +1,17 @@
 package br.unipar.mediconnect.domain;
 
 public class Endereco {
-    //TODO: Fazer tabela para isso?
-    private String logadouro;
+    private String logradouro;
     private Integer num;
     private String complemento;
     private String bairro;
 
-    public String getLogadouro() {
-        return logadouro;
+    public String getLogradouro() {
+        return logradouro;
     }
 
-    public void setLogadouro(String logadouro) {
-        this.logadouro = logadouro;
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
     }
 
     public Integer getNum() {

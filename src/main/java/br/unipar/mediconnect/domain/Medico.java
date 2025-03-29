@@ -1,5 +1,7 @@
 package br.unipar.mediconnect.domain;
 
+import br.unipar.mediconnect.dto.MedicoRequestInsertDTO;
+
 public class Medico {
     private int id;
     private String nome;
@@ -8,6 +10,16 @@ public class Medico {
     private String crm;
     private Especialidade especialidade;
     private Endereco endereco;
+
+    public Medico(MedicoRequestInsertDTO dto) {
+        nome = dto.getNome();
+        email = dto.getEmail();
+        telefone = dto.getTelefone();
+        crm = dto.getCrm();
+        especialidade = new Especialidade();
+        especialidade.setId(dto.getEspecialidadeId());
+        endereco = dto.getEndereco();
+    }
 
     public int getId() {
         return id;

@@ -43,11 +43,11 @@ public class MedicoRequestInsertDTO {
         this.crm = crm;
     }
 
-    public int getEspecialidade() {
+    public int getEspecialidadeId() {
         return especialidadeId;
     }
 
-    public void setEspecialidade(int especialidadeId) {
+    public void setEspecialidadeId(int especialidadeId) {
         this.especialidadeId = especialidadeId;
     }
 

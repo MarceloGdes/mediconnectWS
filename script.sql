@@ -11,7 +11,7 @@ CREATE TABLE medico(
 	crm VARCHAR(10) NOT NULL,
 	especialidade_id INT REFERENCES especialidade(id) NOT NULL,
 	logradouro VARCHAR(255) NOT NULL,
-    numero VARCHAR(10),
+    numero INT,
     complemento VARCHAR(100),
     bairro VARCHAR(100) NOT NULL,
 	ativo BOOL DEFAULT TRUE
@@ -24,7 +24,7 @@ CREATE TABLE paciente(
 	telefone VARCHAR(15) NOT NULL,
 	cpf VARCHAR(11) NOT NULL UNIQUE,
 	logradouro VARCHAR(255) NOT NULL,
-    numero VARCHAR(10),
+    numero INT,
     complemento VARCHAR(100),
     bairro VARCHAR(100) NOT NULL,
 	cidade VARCHAR(100) NOT NULL,
