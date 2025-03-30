@@ -24,6 +24,8 @@ public class PacienteRepository {
 
     private static final String FIND_BY_ID = "SELECT * FROM paciente WHERE id=?";
 
+    private static final String UPDATE_STATUS = "UPDATE paciente SET ativo=? WHERE id=?";
+
     public Paciente insert(Paciente paciente) throws SQLException, NamingException {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -110,6 +112,25 @@ public class PacienteRepository {
             pstmt.setString(8, paciente.getEndereco().getUf());
             pstmt.setString(9, paciente.getEndereco().getCep());
             pstmt.setInt(10, paciente.getId());
+
+            return pstmt.executeUpdate();
+
+        }finally {
+            if(conn != null) conn.close();
+            if(pstmt != null) pstmt.close();
+        }
+    }
+
+    public int updateStatus(int id) throws SQLException, NamingException {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            conn = new ConnectionFactory().getConnection();
+            pstmt = conn.prepareStatement(UPDATE_STATUS);
+
+            pstmt.setBoolean(1, false);
+            pstmt.setInt(2, id);
 
             return pstmt.executeUpdate();
 

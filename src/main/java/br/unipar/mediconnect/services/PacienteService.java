@@ -60,6 +60,21 @@ public class PacienteService {
         }
     }
 
+    public void setStAtivoToFalse(int id) throws BusinessException {
+        var paciente = findById(id);
+        if(!paciente.isStAtivo()) throw new BusinessException("Paciente já inativado/excluido do sistema.");
+
+        try {
+            int linhasAlteradas = repository.updateStatus(id);
+
+            if(linhasAlteradas < 1) throw new BusinessException("Ocorreu um erro ao excluir o paciente. Entre em contato com o suporte.");
+
+        }catch (Exception e) {
+            e.printStackTrace();
+            throw new BusinessException("Ocorreu um erro ao excluir o paciente. Entre em contato com o suporte.");
+        }
+    }
+
     public Paciente findById(int id) throws BusinessException {
         try {
             var paciente = repository.findById(id);

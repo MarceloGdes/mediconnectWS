@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 @WebService(endpointInterface = "br.unipar.mediconnect.interfaces.PacienteWs")
 public class PacienteWsImp implements PacienteWs {
-    private PacienteService service = new PacienteService();
+    private final PacienteService service = new PacienteService();
     @Override
     public Paciente insert(PacienteRequestInsertDto dto) throws BusinessException {
         var paciente = new Paciente(dto);
@@ -28,5 +28,10 @@ public class PacienteWsImp implements PacienteWs {
     public void update(PacienteRequestUpdateDto dto) throws BusinessException {
         var paciente = new Paciente(dto);
         service.update(paciente);
+    }
+
+    @Override
+    public void remove(int id) throws BusinessException {
+        service.setStAtivoToFalse(id);
     }
 }

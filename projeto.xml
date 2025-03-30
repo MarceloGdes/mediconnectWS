@@ -282,6 +282,18 @@
   <wsdl:import location="http://localhost:8080/mediconnect-1.0-SNAPSHOT/PacienteWsImp?wsdl=PacienteWs.wsdl" namespace="http://interfaces.mediconnect.unipar.br/"></wsdl:import>
   <wsdl:binding name="PacienteWsImpServiceSoapBinding" type="ns1:PacienteWs">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="remove">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="remove">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="removeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="getAll">
       <soap:operation soapAction="" style="document"/>
       <wsdl:input name="getAll">
@@ -331,8 +343,18 @@
       <xs:element name="getAllResponse" type="tns:getAllResponse"/>
       <xs:element name="insert" type="tns:insert"/>
       <xs:element name="insertResponse" type="tns:insertResponse"/>
+      <xs:element name="remove" type="tns:remove"/>
+      <xs:element name="removeResponse" type="tns:removeResponse"/>
       <xs:element name="update" type="tns:update"/>
       <xs:element name="updateResponse" type="tns:updateResponse"/>
+      <xs:complexType name="remove">
+        <xs:sequence>
+          <xs:element name="arg0" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="removeResponse">
+        <xs:sequence/>
+      </xs:complexType>
       <xs:complexType name="getAll">
         <xs:sequence/>
       </xs:complexType>
@@ -430,6 +452,9 @@
   <wsdl:message name="BusinessException">
     <wsdl:part element="ns1:BusinessException" name="BusinessException"></wsdl:part>
   </wsdl:message>
+  <wsdl:message name="remove">
+    <wsdl:part element="ns1:remove" name="parameters"></wsdl:part>
+  </wsdl:message>
   <wsdl:message name="insertResponse">
     <wsdl:part element="ns1:insertResponse" name="parameters"></wsdl:part>
   </wsdl:message>
@@ -442,7 +467,15 @@
   <wsdl:message name="update">
     <wsdl:part element="ns1:update" name="parameters"></wsdl:part>
   </wsdl:message>
+  <wsdl:message name="removeResponse">
+    <wsdl:part element="ns1:removeResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
   <wsdl:portType name="PacienteWs">
+    <wsdl:operation name="remove">
+      <wsdl:input message="ns1:remove" name="remove"></wsdl:input>
+      <wsdl:output message="ns1:removeResponse" name="removeResponse"></wsdl:output>
+      <wsdl:fault message="ns1:BusinessException" name="BusinessException"></wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="getAll">
       <wsdl:input message="ns1:getAll" name="getAll"></wsdl:input>
       <wsdl:output message="ns1:getAllResponse" name="getAllResponse"></wsdl:output>
@@ -529,4 +562,11 @@
          </arg0>\r
       </int:update>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://mediconnect.unipar.br/PacienteWs/update"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://mediconnect.unipar.br/PacienteWs/update"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="c9e9d9c9-03f3-43d1-ba1c-e487ad28950a" isOneWay="false" action="" name="remove" bindingOperationName="remove" type="Request-Response" outputName="removeResponse" inputName="remove" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="d2b80577-ca96-4c65-b775-a148bc955ad8" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/mediconnect-1.0-SNAPSHOT/PacienteWsImp</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://interfaces.mediconnect.unipar.br/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <int:remove>\r
+         <arg0>1</arg0>\r
+      </int:remove>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://mediconnect.unipar.br/PacienteWs/remove"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>

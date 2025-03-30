@@ -179,5 +179,5 @@ public class MedicoRepository {
             if(conn != null) conn.close();
             if(pstmt != null) pstmt.close();
         }
-        }
+    }
 }
