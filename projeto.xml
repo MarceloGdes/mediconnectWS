@@ -278,4 +278,183 @@
          <arg0>1</arg0>\r
       </int:remove>\r
    </soapenv:Body>\r
-</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://mediconnect.unipar.br/MedicoWs/remove"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://mediconnect.unipar.br/MedicoWs/remove"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" id="5b7d8794-3789-41a4-ba8c-d8ca7e655bd3" wsaVersion="NONE" name="PacienteWsImpServiceSoapBinding" type="wsdl" bindingName="{http://mediconnect.unipar.br/}PacienteWsImpServiceSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/mediconnect-1.0-SNAPSHOT/PacienteWsImp?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/mediconnect-1.0-SNAPSHOT/PacienteWsImp?wsdl"><con:part><con:url>http://localhost:8080/mediconnect-1.0-SNAPSHOT/PacienteWsImp?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="PacienteWsImpService" targetNamespace="http://mediconnect.unipar.br/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://mediconnect.unipar.br/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:ns1="http://interfaces.mediconnect.unipar.br/">
+  <wsdl:import location="http://localhost:8080/mediconnect-1.0-SNAPSHOT/PacienteWsImp?wsdl=PacienteWs.wsdl" namespace="http://interfaces.mediconnect.unipar.br/"></wsdl:import>
+  <wsdl:binding name="PacienteWsImpServiceSoapBinding" type="ns1:PacienteWs">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getAll">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getAll">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getAllResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="insert">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="insert">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="insertResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PacienteWsImpService">
+    <wsdl:port binding="tns:PacienteWsImpServiceSoapBinding" name="PacienteWsImpPort">
+      <soap:address location="http://localhost:8080/mediconnect-1.0-SNAPSHOT/PacienteWsImp"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://localhost:8080/mediconnect-1.0-SNAPSHOT/PacienteWsImp?wsdl=PacienteWs.wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="PacienteWs" targetNamespace="http://interfaces.mediconnect.unipar.br/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns1="http://interfaces.mediconnect.unipar.br/">
+  <wsdl:types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://interfaces.mediconnect.unipar.br/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://interfaces.mediconnect.unipar.br/">
+      <xs:element name="getAll" type="tns:getAll"/>
+      <xs:element name="getAllResponse" type="tns:getAllResponse"/>
+      <xs:element name="insert" type="tns:insert"/>
+      <xs:element name="insertResponse" type="tns:insertResponse"/>
+      <xs:complexType name="getAll">
+        <xs:sequence/>
+      </xs:complexType>
+      <xs:complexType name="getAllResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:pacienteResponseGetDto"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="pacienteResponseGetDto">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="cpf" type="xs:string"/>
+          <xs:element minOccurs="0" name="email" type="xs:string"/>
+          <xs:element minOccurs="0" name="nome" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="insert">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="tns:pacienteRequestInsertDto"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="pacienteRequestInsertDto">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="cpf" type="xs:string"/>
+          <xs:element minOccurs="0" name="email" type="xs:string"/>
+          <xs:element minOccurs="0" name="endereco" type="tns:enderecoPaciente"/>
+          <xs:element minOccurs="0" name="nome" type="xs:string"/>
+          <xs:element minOccurs="0" name="telefone" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="enderecoPaciente">
+        <xs:complexContent>
+          <xs:extension base="tns:endereco">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="cep" type="xs:string"/>
+              <xs:element minOccurs="0" name="cidade" type="xs:string"/>
+              <xs:element minOccurs="0" name="uf" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="endereco">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="bairro" type="xs:string"/>
+          <xs:element minOccurs="0" name="complemento" type="xs:string"/>
+          <xs:element minOccurs="0" name="logradouro" type="xs:string"/>
+          <xs:element minOccurs="0" name="num" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="insertResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:paciente"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="paciente">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="cpf" type="xs:string"/>
+          <xs:element minOccurs="0" name="email" type="xs:string"/>
+          <xs:element minOccurs="0" name="endereco" type="tns:enderecoPaciente"/>
+          <xs:element name="id" type="xs:int"/>
+          <xs:element minOccurs="0" name="nome" type="xs:string"/>
+          <xs:element name="stAtivo" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="telefone" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="BusinessException" type="tns:BusinessException"/>
+      <xs:complexType name="BusinessException">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getAllResponse">
+    <wsdl:part element="ns1:getAllResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAll">
+    <wsdl:part element="ns1:getAll" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="BusinessException">
+    <wsdl:part element="ns1:BusinessException" name="BusinessException"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="insertResponse">
+    <wsdl:part element="ns1:insertResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="insert">
+    <wsdl:part element="ns1:insert" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="PacienteWs">
+    <wsdl:operation name="getAll">
+      <wsdl:input message="ns1:getAll" name="getAll"></wsdl:input>
+      <wsdl:output message="ns1:getAllResponse" name="getAllResponse"></wsdl:output>
+      <wsdl:fault message="ns1:BusinessException" name="BusinessException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="insert">
+      <wsdl:input message="ns1:insert" name="insert"></wsdl:input>
+      <wsdl:output message="ns1:insertResponse" name="insertResponse"></wsdl:output>
+      <wsdl:fault message="ns1:BusinessException" name="BusinessException"></wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/mediconnect-1.0-SNAPSHOT/PacienteWsImp</con:endpoint></con:endpoints><con:operation id="53617ecd-61c4-4104-b348-3f28bc686b59" isOneWay="false" action="" name="insert" bindingOperationName="insert" type="Request-Response" outputName="insertResponse" inputName="insert" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="b1b66bfe-174c-4ca8-a231-03850b3e4747" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/mediconnect-1.0-SNAPSHOT/PacienteWsImp</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://interfaces.mediconnect.unipar.br/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <int:insert>\r
+         <!--Optional:-->\r
+         <arg0>\r
+            <!--Optional:-->\r
+            <cpf>01234567890</cpf>\r
+            <!--Optional:-->\r
+            <email>marcos@email.com</email>\r
+            <!--Optional:-->\r
+            <endereco>\r
+               <!--Optional:-->\r
+               <bairro>bairro</bairro>\r
+               <!--Optional:-->\r
+               <complemento>aaaa</complemento>\r
+               <!--Optional:-->\r
+               <logradouro>rua abc</logradouro>\r
+               <!--Optional:-->\r
+               <num>10</num>\r
+               <!--Optional:-->\r
+               <cep>85908300</cep>\r
+               <!--Optional:-->\r
+               <cidade>Toledo</cidade>\r
+               <!--Optional:-->\r
+               <uf>PR</uf>\r
+            </endereco>\r
+            <!--Optional:-->\r
+            <nome>Marcos Silva</nome>\r
+            <!--Optional:-->\r
+            <telefone>45999999999</telefone>\r
+         </arg0>\r
+      </int:insert>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://mediconnect.unipar.br/PacienteWs/insert"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="6a6594ea-c354-4312-be1c-1e6727fff63f" isOneWay="false" action="" name="getAll" bindingOperationName="getAll" type="Request-Response" outputName="getAllResponse" inputName="getAll" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="772a721c-f243-4771-bc87-3b2467639e87" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/mediconnect-1.0-SNAPSHOT/PacienteWsImp</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:int="http://interfaces.mediconnect.unipar.br/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <int:getAll/>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://mediconnect.unipar.br/PacienteWs/getAll"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>

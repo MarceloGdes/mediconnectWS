@@ -19,6 +19,9 @@ public class Paciente {
         endereco = dto.getEndereco();
     }
 
+    public Paciente() {
+    }
+
     public int getId() {
         return id;
     }

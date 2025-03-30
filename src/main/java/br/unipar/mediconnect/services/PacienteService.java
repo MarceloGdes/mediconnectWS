@@ -1,8 +1,11 @@
 package br.unipar.mediconnect.services;
 
 import br.unipar.mediconnect.domain.Paciente;
+import br.unipar.mediconnect.dto.PacienteResponseGetDto;
 import br.unipar.mediconnect.exceptions.BusinessException;
 import br.unipar.mediconnect.repositories.PacienteRepository;
+
+import java.util.ArrayList;
 
 public class PacienteService {
 
@@ -21,6 +24,25 @@ public class PacienteService {
             e.printStackTrace();
             throw new BusinessException("Erro ao cadastrar o paciente. Entre em contato com o suporte.");
         }
+    }
+
+    public ArrayList<PacienteResponseGetDto> getAll() throws BusinessException {
+        var pacientesResponse = new ArrayList<PacienteResponseGetDto>();
+
+        try {
+            var pacientes = repository.selectAll();
+
+            pacientes.forEach(paciente -> {
+                pacientesResponse.add(new PacienteResponseGetDto(paciente));
+            });
+
+            return pacientesResponse;
+
+        }catch (Exception e) {
+            e.printStackTrace();
+            throw new BusinessException("Ocorreu um erro ao buscar os pacientes. Entre em contato com o suporte");
+        }
+
     }
 
     private void validarPacienteInsert(Paciente paciente) throws BusinessException {

@@ -8,11 +8,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class PacienteRepository {
     private static final String INSERT =
             "INSERT INTO paciente(nome, email, telefone, cpf, logradouro, numero, complemento, bairro, cidade, uf, cep)" +
                     "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    private static final String SELECT_ALL = "SELECT nome, email, cpf FROM paciente ORDER BY nome";
 
     public Paciente insert(Paciente paciente) throws SQLException, NamingException {
         Connection conn = null;
@@ -49,5 +52,36 @@ public class PacienteRepository {
         }
 
         return paciente;
+    }
+
+    public ArrayList<Paciente> selectAll() throws SQLException, NamingException {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        var pacientes = new ArrayList<Paciente>();
+
+        try {
+            conn = new ConnectionFactory().getConnection();
+            pstmt =  conn.prepareStatement(SELECT_ALL);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                var paciente  = new Paciente();
+
+                paciente.setNome(rs.getString("nome"));
+                paciente.setEmail(rs.getString("email"));
+                paciente.setCpf(rs.getString("cpf"));
+
+                pacientes.add(paciente);
+            }
+
+        }finally {
+            if(conn != null) conn.close();
+            if(rs != null) rs.close();
+            if(pstmt != null) pstmt.close();
+        }
+
+        return pacientes;
     }
 }
