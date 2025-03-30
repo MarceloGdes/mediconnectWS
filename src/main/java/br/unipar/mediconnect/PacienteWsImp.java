@@ -2,6 +2,7 @@ package br.unipar.mediconnect;
 
 import br.unipar.mediconnect.domain.Paciente;
 import br.unipar.mediconnect.dto.PacienteRequestInsertDto;
+import br.unipar.mediconnect.dto.PacienteRequestUpdateDto;
 import br.unipar.mediconnect.dto.PacienteResponseGetDto;
 import br.unipar.mediconnect.exceptions.BusinessException;
 import br.unipar.mediconnect.interfaces.PacienteWs;
@@ -21,5 +22,11 @@ public class PacienteWsImp implements PacienteWs {
     @Override
     public ArrayList<PacienteResponseGetDto> getAll() throws BusinessException {
         return service.getAll();
+    }
+
+    @Override
+    public void update(PacienteRequestUpdateDto dto) throws BusinessException {
+        var paciente = new Paciente(dto);
+        service.update(paciente);
     }
 }

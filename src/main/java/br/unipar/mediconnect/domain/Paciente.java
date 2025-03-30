@@ -1,6 +1,7 @@
 package br.unipar.mediconnect.domain;
 
 import br.unipar.mediconnect.dto.PacienteRequestInsertDto;
+import br.unipar.mediconnect.dto.PacienteRequestUpdateDto;
 
 public class Paciente {
     private int id;
@@ -15,6 +16,13 @@ public class Paciente {
         nome = dto.getNome();
         cpf = dto.getCpf();
         email = dto.getEmail();
+        telefone = dto.getTelefone();
+        endereco = dto.getEndereco();
+    }
+
+    public Paciente(PacienteRequestUpdateDto dto) {
+        id = dto.getId();
+        nome = dto.getNome();
         telefone = dto.getTelefone();
         endereco = dto.getEndereco();
     }

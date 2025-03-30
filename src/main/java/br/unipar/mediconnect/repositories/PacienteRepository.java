@@ -1,5 +1,6 @@
 package br.unipar.mediconnect.repositories;
 
+import br.unipar.mediconnect.domain.EnderecoPaciente;
 import br.unipar.mediconnect.domain.Paciente;
 import br.unipar.mediconnect.infra.ConnectionFactory;
 
@@ -16,6 +17,12 @@ public class PacienteRepository {
                     "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private static final String SELECT_ALL = "SELECT nome, email, cpf FROM paciente ORDER BY nome";
+
+    private static final String UPDATE = "UPDATE paciente " +
+            "SET nome=?, telefone=?, logradouro=?, numero=?, complemento=?, bairro=?, cidade=?, uf=?, cep=? " +
+            "WHERE id=?";
+
+    private static final String FIND_BY_ID = "SELECT * FROM paciente WHERE id=?";
 
     public Paciente insert(Paciente paciente) throws SQLException, NamingException {
         Connection conn = null;
@@ -83,5 +90,75 @@ public class PacienteRepository {
         }
 
         return pacientes;
+    }
+
+    public int update(Paciente paciente) throws SQLException, NamingException {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            conn = new ConnectionFactory().getConnection();
+            pstmt = conn.prepareStatement(UPDATE);
+
+            pstmt.setString(1, paciente.getNome());
+            pstmt.setString(2, paciente.getTelefone());
+            pstmt.setString(3, paciente.getEndereco().getLogradouro());
+            pstmt.setInt(4, paciente.getEndereco().getNum());
+            pstmt.setString(5, paciente.getEndereco().getComplemento());
+            pstmt.setString(6, paciente.getEndereco().getBairro());
+            pstmt.setString(7, paciente.getEndereco().getCidade());
+            pstmt.setString(8, paciente.getEndereco().getUf());
+            pstmt.setString(9, paciente.getEndereco().getCep());
+            pstmt.setInt(10, paciente.getId());
+
+            return pstmt.executeUpdate();
+
+        }finally {
+            if(conn != null) conn.close();
+            if(pstmt != null) pstmt.close();
+        }
+    }
+
+    public Paciente findById(int id) throws SQLException, NamingException {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try{
+            conn = new ConnectionFactory().getConnection();
+            pstmt = conn.prepareStatement(FIND_BY_ID);
+            pstmt.setInt(1, id);
+            rs = pstmt.executeQuery();
+
+            if(rs.next()){
+                var paciente = new Paciente();
+                paciente.setId(id);
+                paciente.setNome(rs.getString("nome"));
+                paciente.setEmail(rs.getString("email"));
+                paciente.setCpf(rs.getString("cpf"));
+                paciente.setTelefone(rs.getString("telefone"));
+                paciente.setStAtivo(rs.getBoolean("ativo"));
+
+                var endereco = new EnderecoPaciente();
+                endereco.setNum(rs.getInt("numero"));
+                endereco.setBairro(rs.getString("bairro"));
+                endereco.setComplemento(rs.getString("complemento"));
+                endereco.setLogradouro(rs.getString("logradouro"));
+                endereco.setCidade(rs.getString("cidade"));
+                endereco.setUf(rs.getString("uf"));
+                endereco.setCep(rs.getString("cep"));
+                paciente.setEndereco(endereco);
+
+                return paciente;
+            }
+
+        } finally {
+            if(conn != null) conn.close();
+            if(rs != null) rs.close();
+            if(pstmt != null) pstmt.close();
+
+        }
+
+        return null;
     }
 }
