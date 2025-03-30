@@ -22,7 +22,7 @@ CREATE TABLE paciente(
 	nome VARCHAR(50) NOT NULL,
 	email VARCHAR(50) NOT NULL,
 	telefone VARCHAR(15) NOT NULL,
-	cpf VARCHAR(11) NOT NULL UNIQUE,
+	cpf VARCHAR(11) NOT NULL,
 	logradouro VARCHAR(255) NOT NULL,
     numero INT,
     complemento VARCHAR(100),
@@ -32,6 +32,7 @@ CREATE TABLE paciente(
 	cep VARCHAR(8) NOT NULL,
 	ativo BOOL DEFAULT TRUE
 );
+
 
 CREATE TABLE consulta(
 	id SERIAL PRIMARY KEY,
