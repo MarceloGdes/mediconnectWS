@@ -52,6 +52,28 @@ public class MedicoService {
         }
     }
 
+    public ArrayList<Medico> getAllMedicos() throws BusinessException {
+        especialideService = new EspecialideService();
+        var medicosResponse = new ArrayList<Medico>();
+
+        try {
+            var medicos = repository.selectAll();
+
+            for (Medico medico : medicos) {
+                var descEspecialidade = especialideService.findById(medico.getEspecialidade().getId()).getDescricao();
+                medico.getEspecialidade().setDescricao(descEspecialidade);
+
+                medicosResponse.add(medico);
+            }
+
+            return medicosResponse;
+
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new BusinessException("Um erro ocorreu ao buscar os médicos. Entre em contato com o suporte.");
+        }
+    }
+
     public void update(Medico medico) throws BusinessException {
         validarMedicoUpdate(medico);
 

@@ -5,7 +5,6 @@ import br.unipar.mediconnect.domain.Medico;
 public class MedicoResponseGetDto {
     private String nome;
     private String email;
-    private String telefone;
     private String crm;
     private String especialidade;
 
@@ -15,7 +14,6 @@ public class MedicoResponseGetDto {
     public MedicoResponseGetDto(Medico medico) {
         nome = medico.getNome();
         email = medico.getEmail();
-        telefone = medico.getTelefone();
         crm = medico.getCrm();
         especialidade = medico.getEspecialidade().getDescricao();
     }
@@ -36,13 +34,6 @@ public class MedicoResponseGetDto {
         this.email = email;
     }
 
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
 
     public String getCrm() {
         return crm;

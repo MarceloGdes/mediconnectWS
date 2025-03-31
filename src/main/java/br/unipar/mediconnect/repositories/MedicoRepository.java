@@ -19,7 +19,7 @@ public class MedicoRepository {
                     "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private static final String SELECT_ALL =
-            "SELECT nome, email, crm, especialidade_id FROM medico ORDER BY nome";
+            "SELECT * FROM medico ORDER BY nome";
 
     private static final String UPDATE =
             "UPDATE medico SET nome=?, telefone=?, logradouro=?, numero=?, complemento=?, bairro=? " +
@@ -79,11 +79,23 @@ public class MedicoRepository {
 
             while (rs.next()){
                 var medico = new Medico();
+                medico.setId(rs.getInt("id"));
                 medico.setNome(rs.getString("nome"));
                 medico.setEmail(rs.getString("email"));
+                medico.setTelefone(rs.getString("telefone"));
                 medico.setCrm(rs.getString("crm"));
+
                 medico.setEspecialidade(new Especialidade());
                 medico.getEspecialidade().setId(rs.getInt("especialidade_id"));
+
+                Endereco endereco = new Endereco();
+                endereco.setNum(rs.getInt("numero"));
+                endereco.setBairro(rs.getString("bairro"));
+                endereco.setComplemento(rs.getString("complemento"));
+                endereco.setLogradouro(rs.getString("logradouro"));
+                medico.setEndereco(endereco);
+
+                medico.setStAtivo(rs.getBoolean("ativo"));
 
                 medicos.add(medico);
             }
