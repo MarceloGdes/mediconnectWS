@@ -1,8 +1,6 @@
 package br.unipar.mediconnect.repositories;
 
-import br.unipar.mediconnect.domain.Consulta;
-import br.unipar.mediconnect.domain.Medico;
-import br.unipar.mediconnect.domain.Paciente;
+import br.unipar.mediconnect.domain.*;
 import br.unipar.mediconnect.infra.ConnectionFactory;
 
 import javax.naming.NamingException;
@@ -27,6 +25,12 @@ public class ConsultaRepository {
             "SELECT * FROM consulta WHERE paciente_id=? " +
                     "AND CAST(data_agendamento AS DATE)=? " +
                     "AND cancelada = false";
+
+    private static final String UPDATE_CANCELAR_CONSULTA =
+            "UPDATE consulta SET cancelada = true WHERE id = ?";
+
+    private static final String FIND_BY_ID =
+            "SELECT * FROM consulta WHERE id=?";
 
     public Consulta insert(Consulta consulta) throws SQLException, NamingException {
         Connection conn = null;
@@ -104,6 +108,62 @@ public class ConsultaRepository {
             rs = pstmt.executeQuery();
 
             if(rs.next()) {
+                var consulta = new Consulta();
+
+                consulta.setId(rs.getInt("id"));
+                consulta.setDataHoraAgendamento(rs.getTimestamp("data_agendamento").toLocalDateTime());
+                consulta.setCancelada(rs.getBoolean("cancelada"));
+
+                var paciente = new Paciente();
+                paciente.setId(rs.getInt("paciente_id"));
+                consulta.setPaciente(paciente);
+
+                var medico = new Medico();
+                medico.setId(rs.getInt("medico_id"));
+                consulta.setMedico(medico);
+
+                return consulta;
+            }
+
+        }finally {
+            if(conn != null) conn.close();
+            if(rs != null) rs.close();
+            if(pstmt != null) pstmt.close();
+        }
+
+        return null;
+    }
+
+    public int updateSetConsultaCancelada(int id) throws SQLException, NamingException {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            conn = new ConnectionFactory().getConnection();
+            pstmt = conn.prepareStatement(UPDATE_CANCELAR_CONSULTA);
+
+            pstmt.setInt(1, id);
+
+            return pstmt.executeUpdate();
+
+        }finally {
+            if(conn != null) conn.close();
+            if(pstmt != null) pstmt.close();
+        }
+    }
+
+    public Consulta findById(int id) throws SQLException, NamingException {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try{
+            conn = new ConnectionFactory().getConnection();
+            pstmt = conn.prepareStatement(FIND_BY_ID);
+            pstmt.setInt(1, id);
+            rs = pstmt.executeQuery();
+
+            if(rs.next()){
                 var consulta = new Consulta();
 
                 consulta.setId(rs.getInt("id"));

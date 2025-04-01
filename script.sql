@@ -49,7 +49,7 @@ CREATE TABLE motivo_cancelamento (
 
 CREATE TABLE historico_cancelamento_consulta(
 	id SERIAL PRIMARY KEY,
-	consulta_id INT REFERENCES consulta(id),
+	consulta_id INT NOT NULL REFERENCES consulta(id),
 	motivo_cancelamento_id INT NOT NULL REFERENCES motivo_cancelamento(id)
 );
 

@@ -1,8 +1,10 @@
 package br.unipar.mediconnect.services;
 
 import br.unipar.mediconnect.domain.Consulta;
+import br.unipar.mediconnect.domain.HistoricoCancelamentoConsulta;
 import br.unipar.mediconnect.domain.Medico;
 import br.unipar.mediconnect.domain.Paciente;
+import br.unipar.mediconnect.dto.ConsultaResponseCancelDto;
 import br.unipar.mediconnect.dto.ConsultaResponseInsertDto;
 import br.unipar.mediconnect.exceptions.BusinessException;
 import br.unipar.mediconnect.repositories.ConsultaRepository;
@@ -22,10 +24,15 @@ public class ConsultaService {
     private final ConsultaRepository repository;
     private final MedicoService medicoService;
     private final PacienteService pacienteService;
+    private final MotivoCancelamentoService motivoCancelamentoService;
+    private final HistoricoConsultasCanceladasService historicoConsultasCanceladasService;
+
     public ConsultaService() {
         repository = new ConsultaRepository();
         pacienteService = new PacienteService();
         medicoService = new MedicoService();
+        motivoCancelamentoService = new MotivoCancelamentoService();
+        historicoConsultasCanceladasService = new HistoricoConsultasCanceladasService();
     }
 
     public ConsultaResponseInsertDto agendar(Consulta consulta) throws BusinessException {
@@ -149,5 +156,56 @@ public class ConsultaService {
         }
 
         return null;
+    }
+
+    public ConsultaResponseCancelDto cancelarConsulta(HistoricoCancelamentoConsulta histCancConsulta) throws BusinessException {
+        var consulta = findById(histCancConsulta.getConsulta().getId());
+        if(consulta.isCancelada())
+            throw new BusinessException("A consulta já está cancelada");
+
+        if(LocalDateTime.now().plusHours(24).isAfter(consulta.getDataHoraAgendamento()))
+            throw new BusinessException("A consulta não pode ser cancelada, devido o prazo de 24 horas de antecedencia.");
+
+        try {
+            //O find by id já valida se o motivo existe. Além de que id, por ser um int, não pode ser nulo.
+            var motivoCancelamento = motivoCancelamentoService.findById(histCancConsulta.getMotivoCancelamento().getId());
+
+            histCancConsulta.setConsulta(consulta);
+
+            histCancConsulta.setMotivoCancelamento(motivoCancelamento);
+            var linhasAlteradas = repository.updateSetConsultaCancelada(consulta.getId());
+
+            if(linhasAlteradas > 0) {
+                var historicoCancelamento = historicoConsultasCanceladasService.insert(histCancConsulta);
+                return new ConsultaResponseCancelDto(histCancConsulta);
+
+            }else {
+                throw new BusinessException("Erro ao cancelar a consulta. Entre em contato com o suporte.");
+            }
+
+        }catch (BusinessException e) {
+            throw e;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BusinessException("Erro ao cancelar a consulta. Entre em contato com o suporte.");
+        }
+    }
+
+    public Consulta findById(int id) throws BusinessException {
+        try {
+            var consulta = repository.findById(id);
+
+            if(consulta != null) return consulta;
+
+            throw new BusinessException("Consulta não encontrada. Verifique o id informado.");
+
+        }catch (BusinessException e) {
+            throw e;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BusinessException("Erro ao buscar a consulta. Entre em contato com o suporte.");
+        }
     }
 }
